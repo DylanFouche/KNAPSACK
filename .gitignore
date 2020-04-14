@@ -1,0 +1,9 @@
+# D FOUCHE
+# FCHDYL001
+# UCT CS HONS
+
+# Ignore macOS files
+.DS_Store
+
+# Ignore binaries
+*.class
