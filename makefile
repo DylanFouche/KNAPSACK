@@ -1,6 +1,6 @@
-#D FOUCHE
-#UCT CS HONS
-#FCHDYL001
+# D FOUCHE
+# UCT CS HONS
+# FCHDYL001
 
 JCC = javac
 
@@ -8,7 +8,7 @@ SRCDIR = src
 BINDIR = bin
 DOCDIR = doc
 
-SRC = $(shell find ./src -type f)
+SRC = $(shell find ./$(SRCDIR) -type f)
 OBJ = $(SRC:.java=.class)
 
 default : $(OBJ)
