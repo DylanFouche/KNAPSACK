@@ -12,6 +12,8 @@ import java.util.ArrayList;
 public class Knapsack
 {
   ArrayList<knapsackItem> items = new ArrayList<knapsackItem>();
+  final int capacity = 822;
+  final int best_solution = 997;
 
   public class knapsackItem
   {

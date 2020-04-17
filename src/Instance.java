@@ -14,15 +14,25 @@ public class Instance
   //shared fields
   Knapsack knapsack = new Knapsack();
   MersenneTwister randomGenerator = new MersenneTwister(System.currentTimeMillis());
+  int maxIterations = 10000;
   //genetic algorithm fields
-  int populationSize = 2048;
-  int maximumNumberOfGenerations = 1000000;
+  int population = 2048;
   double elitismRatio = 0.1;
   double crossoverRatio;
   double mutationRatio;
   String selectionMethod;
   String crossoverMethod;
   String mutationMethod;
+  //particle swarm optimization fields
+  double c1;
+  double c2;
+  double inertia;
+  int maxVelocity;
+  int minVelocity;
+  int particles;
+  //simulated annealing fields
+  int initialTemp;
+  double coolingRate;
 
   public Instance(String config_filename)
   {
@@ -51,11 +61,17 @@ public class Instance
     }
     else if(algorithm_type.equals("pso"))
     {
-
+      this.particles = json_obj.getInt("number_particles");
+      this.maxVelocity = json_obj.getInt("maximum_velocity");
+      this.minVelocity = json_obj.getInt("minimum_velocity");
+      this.inertia = json_obj.getDouble("inertia");
+      this.c1 = json_obj.getDouble("c1");
+      this.c2 = json_obj.getDouble("c2");
     }
     else if(algorithm_type.equals("sa"))
     {
-
+      this.initialTemp = json_obj.getInt("initial_temperature");
+      this.coolingRate = json_obj.getDouble("cooling_rate");
     }
     else
     {
