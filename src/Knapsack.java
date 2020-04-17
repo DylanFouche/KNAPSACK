@@ -31,7 +31,6 @@ public class Knapsack
       String header = sc.nextLine();
       while (sc.hasNextLine()){
         String[] line = sc.nextLine().split(";");
-        System.out.println(line.length);
         knapsackItem item = new knapsackItem(Integer.parseInt(line[1]),Integer.parseInt(line[2]));
         items.add(item);
       }
