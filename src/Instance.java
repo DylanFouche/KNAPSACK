@@ -15,8 +15,9 @@ public class Instance
   Knapsack knapsack = new Knapsack();
   MersenneTwister randomGenerator = new MersenneTwister(System.currentTimeMillis());
   int maxIterations = 10000;
+  String algorithm_type;
   //genetic algorithm fields
-  int population = 2048;
+  int populationSize = 2048;
   double elitismRatio = 0.1;
   double crossoverRatio;
   double mutationRatio;
@@ -36,8 +37,7 @@ public class Instance
 
   public Instance(String config_filename)
   {
-    int underscore = config_filename.indexOf("_");
-    String algorithm_type = config_filename.substring(0,underscore);
+    this.algorithm_type = config_filename.substring(0,config_filename.indexOf("_"));
     String json_string = "";
     try{
       Scanner sc = new Scanner(new File("config/"+config_filename));
@@ -51,7 +51,7 @@ public class Instance
     }
     JSONObject json_obj = new JSONObject(json_string);
 
-    if(algorithm_type.equals("ga"))
+    if(this.algorithm_type.equals("ga"))
     {
       this.selectionMethod = json_obj.getString("selection_method");
       this.crossoverMethod = json_obj.getString("crossover_method");
@@ -59,7 +59,7 @@ public class Instance
       this.crossoverRatio = json_obj.getDouble("crossover_ratio");
       this.mutationRatio = json_obj.getDouble("mutation_ratio");
     }
-    else if(algorithm_type.equals("pso"))
+    else if(this.algorithm_type.equals("pso"))
     {
       this.particles = json_obj.getInt("number_particles");
       this.maxVelocity = json_obj.getInt("maximum_velocity");
@@ -68,7 +68,7 @@ public class Instance
       this.c1 = json_obj.getDouble("c1");
       this.c2 = json_obj.getDouble("c2");
     }
-    else if(algorithm_type.equals("sa"))
+    else if(this.algorithm_type.equals("sa"))
     {
       this.initialTemp = json_obj.getInt("initial_temperature");
       this.coolingRate = json_obj.getDouble("cooling_rate");

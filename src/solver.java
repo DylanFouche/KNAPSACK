@@ -4,9 +4,15 @@
   FCHDYL001
 */
 
-public interface solver
+public abstract class Solver
 {
-  public void solve();
-  public void tick();
-  public String toString();
+  public Instance instance;
+
+  public abstract void solve();
+  public abstract void tick();
+
+  public String toString(){
+    //TODO implement
+    return "";
+  }
 }

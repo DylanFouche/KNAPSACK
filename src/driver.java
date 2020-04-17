@@ -6,31 +6,46 @@
 
 public class driver
 {
+  static Instance instance;
+
   public static void main(String[] args)
   {
     if(args.length==2)
     {
       if(args[0].equals("-configuration"))
       {
-        String config_filename = args[1];
-        //IMPLEMENT
-        System.out.println("Executing configuration " + config_filename);
+        System.out.println("Executing configuration " + args[1]);
+        instance = new Instance(args[1]);
+        if(instance.algorithm_type.equals("ga"))
+        {
+          GASolver solver = new GASolver(instance);
+          //TODO implement
+        }
+        else if (instance.algorithm_type.equals("sa"))
+        {
+          //TODO implement
+        }
+        else if(instance.algorithm_type.equals("pso"))
+        {
+          //TODO implement
+        }
+
       }
       else if(args[0].equals("-search_best_configuration"))
       {
         if(args[1].equals("ga"))
         {
-          //IMPLEMENT
+          //TODO implement
           System.out.println("Searching for best genetic algorithm configuration");
         }
         else if (args[1].equals("sa"))
         {
-          //IMPLEMENT
+          //TODO implement
           System.out.println("Searching for best simulated annealing configuration");
         }
         else if(args[1].equals("pso"))
         {
-          //IMPLEMENT
+          //TODO implement
           System.out.println("Searching for best particle swarm optimization configuration");
         }
         else
