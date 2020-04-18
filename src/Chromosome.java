@@ -4,6 +4,8 @@
   FCHDYL001
 */
 
+import java.util.Arrays;
+
 public class Chromosome implements Comparable<Chromosome>
 {
   public boolean[] gene;
@@ -50,9 +52,17 @@ public class Chromosome implements Comparable<Chromosome>
   }
 
   public Chromosome[] doCrossover(Chromosome chromosome) {
-    //TODO implement
     Chromosome[] children = new Chromosome[2];
-    Chromosome[] parents = new Chromosome[2];
+    if(instance.crossoverMethod.equals("1PX")){
+      children = do1PX(chromosome);
+    }
+    else if(instance.crossoverMethod.equals("2PX")){
+      children = do2PX(chromosome);
+    }
+    else{
+      System.out.println("Invalid crossover method!");
+      System.exit(0);
+    }
     return children;
   }
 
@@ -60,6 +70,54 @@ public class Chromosome implements Comparable<Chromosome>
     //TODO implement
     Chromosome chromosome = new Chromosome(instance);
     return chromosome;
+  }
+
+  public Chromosome[] do1PX(Chromosome chromosome){
+    Chromosome[] children = new Chromosome[2];
+    boolean[] child1_gene = new boolean[instance.knapsack.items.size()];
+    boolean[] child2_gene = new boolean[instance.knapsack.items.size()];
+    int crossover_point = instance.randomGenerator.nextInt(instance.knapsack.items.size()-1);
+    for(int i=0; i<instance.knapsack.items.size();++i)
+    {
+      if(i<crossover_point){
+        child1_gene[i] = gene[i];
+        child2_gene[i] = chromosome.gene[i];
+      }
+      else{
+        child1_gene[i] = chromosome.gene[i];
+        child2_gene[i] = gene[i];
+      }
+    }
+    children[0] = new Chromosome(child1_gene,instance);
+    children[1] = new Chromosome(child2_gene,instance);
+    return children;
+  }
+
+  public Chromosome[] do2PX(Chromosome chromosome){
+    Chromosome[] children = new Chromosome[2];
+    boolean[] child1_gene = new boolean[instance.knapsack.items.size()];
+    boolean[] child2_gene = new boolean[instance.knapsack.items.size()];
+    int[] crossover_points = {instance.randomGenerator.nextInt(instance.knapsack.items.size()-1),
+      instance.randomGenerator.nextInt(instance.knapsack.items.size()-1)};
+    Arrays.sort(crossover_points);
+    for(int i=0; i<instance.knapsack.items.size();++i)
+    {
+      if(i<crossover_points[0]){
+        child1_gene[i] = gene[i];
+        child2_gene[i] = chromosome.gene[i];
+      }
+      else if (i>crossover_points[0] && i<crossover_points[1]){
+        child1_gene[i] = chromosome.gene[i];
+        child2_gene[i] = gene[i];
+      }
+      else{
+        child1_gene[i] = gene[i];
+        child2_gene[i] = chromosome.gene[i];
+      }
+    }
+    children[0] = new Chromosome(child1_gene,instance);
+    children[1] = new Chromosome(child2_gene,instance);
+    return children;
   }
 
   public int compareTo(Chromosome chromosome) {

@@ -38,6 +38,7 @@ public class GASolver extends Solver
     generator.log(footer());
     generator.writeLog();
   }
+  
   public void tick(){
     population.evolve();
     CandidateSolution candidateSolution = new CandidateSolution(instance, iteration,
