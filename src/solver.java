@@ -10,6 +10,7 @@ public abstract class Solver
   public Generator generator;
   public Timer timer;
   public CandidateSolution[] solutions;
+  public double currentBestSolutionQuality;
   public int iteration = 0;
   public String timestamp;
   public long runtime;
