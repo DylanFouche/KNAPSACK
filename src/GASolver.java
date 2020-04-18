@@ -28,9 +28,10 @@ public class GASolver extends Solver
   }
 
   public void solve(){
+    currentBestSolutionQuality = 0;
     generator.log(header());
     timer.tick();
-    while(iteration < instance.maxIterations){
+    while(iteration < instance.maxIterations && currentBestSolutionQuality < 100){
       tick();
       ++iteration;
     }
@@ -38,7 +39,7 @@ public class GASolver extends Solver
     generator.log(footer());
     generator.writeLog();
   }
-  
+
   public void tick(){
     population.evolve();
     CandidateSolution candidateSolution = new CandidateSolution(instance, iteration,
@@ -46,6 +47,9 @@ public class GASolver extends Solver
     solutions[iteration] = candidateSolution;
     if(iteration > 0 && solutions[iteration].squality > solutions[iteration-1].squality){
       generator.log(solutions[iteration].toString());
+    }
+    if(solutions[iteration].squality > currentBestSolutionQuality){
+      currentBestSolutionQuality = solutions[iteration].squality;
     }
   }
 }
