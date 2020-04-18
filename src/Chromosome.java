@@ -94,7 +94,7 @@ public class Chromosome implements Comparable<Chromosome>
     return chromosome;
   }
 
-  public Chromosome[] do1PX(Chromosome chromosome){
+  private Chromosome[] do1PX(Chromosome chromosome){
     //1-point crossover algorithm
     Chromosome[] children = new Chromosome[2];
     boolean[] child1_gene = new boolean[instance.knapsack.items.size()];
@@ -116,7 +116,7 @@ public class Chromosome implements Comparable<Chromosome>
     return children;
   }
 
-  public Chromosome[] do2PX(Chromosome chromosome){
+  private Chromosome[] do2PX(Chromosome chromosome){
     //2-point crossover algorithm
     Chromosome[] children = new Chromosome[2];
     boolean[] child1_gene = new boolean[instance.knapsack.items.size()];
@@ -144,7 +144,7 @@ public class Chromosome implements Comparable<Chromosome>
     return children;
   }
 
-  public boolean[] doBFM(){
+  private boolean[] doBFM(){
     //bit flip mutation algorithm
     boolean[] new_gene = gene;
     int mutationIndex = instance.randomGenerator.nextInt(instance.knapsack.items.size()-1);
@@ -152,7 +152,7 @@ public class Chromosome implements Comparable<Chromosome>
     return new_gene;
   }
 
-  public boolean[] doEXM(){
+  private boolean[] doEXM(){
     //exchange mutation algorithm
     boolean[] new_gene = gene;
     int mutationIndex1 = instance.randomGenerator.nextInt(instance.knapsack.items.size()-1);
@@ -163,7 +163,7 @@ public class Chromosome implements Comparable<Chromosome>
     return new_gene;
   }
 
-  public boolean[] doIVM(){
+  private boolean[] doIVM(){
     //inversion mutation algorithm
     boolean[] new_gene = gene;
     int[] mutation_indicies = {instance.randomGenerator.nextInt(instance.knapsack.items.size()-1),
@@ -179,7 +179,7 @@ public class Chromosome implements Comparable<Chromosome>
     return new_gene;
   }
 
-  public boolean[] doISM(){
+  private boolean[] doISM(){
     //insertion mutation algorithm
     boolean[] new_gene = gene;
     int[] mutation_indicies = {instance.randomGenerator.nextInt(instance.knapsack.items.size()-1),
@@ -193,7 +193,7 @@ public class Chromosome implements Comparable<Chromosome>
     return new_gene;
   }
 
-  public boolean[] doDPM(){
+  private boolean[] doDPM(){
     //displacement mutation algorithm
     List<Boolean> new_gene_list = new LinkedList<Boolean>();
     for(boolean b : gene){

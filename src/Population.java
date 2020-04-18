@@ -60,16 +60,56 @@ public class Population
     population = chromosomeArray;
   }
 
-  private Chromosome[] selectParents() {
-    //TODO implement
+  private Chromosome[] selectParents(){
     Chromosome[] parents = new Chromosome[2];
+    if(instance.selectionMethod.equals("RWS")){
+      parents = doRWS();
+    }
+    else if(instance.selectionMethod.equals("TS")){
+      parents = doTS();
+    }
+    else{
+      System.out.println("Invalid parent selection method!");
+      System.exit(0);
+    }
     return parents;
   }
 
-  public Chromosome[] getPopulation() {
-    Chromosome[] chromosomeArray = new Chromosome[population.length];
-    System.arraycopy(population, 0, chromosomeArray, 0, population.length);
-    return chromosomeArray;
+  private Chromosome[] doTS(){
+    int tournament_size = instance.populationSize / 10;
+    Chromosome[] competitors = new Chromosome[tournament_size];
+    for(int i=0; i<tournament_size; ++i){
+      competitors[i] = population[instance.randomGenerator.nextInt(instance.populationSize-1)];
+    }
+    Arrays.sort(competitors, Collections.reverseOrder());
+    Chromosome[] parents = {competitors[0], competitors[1]};
+    return parents;
+  }
+
+  private Chromosome[] doRWS(){
+    long fitness_sum = 0;
+    for(Chromosome c : population){
+      fitness_sum += c.fitness;
+    }
+    double[] probabilities = new double[instance.populationSize];
+    double probability_sum = 0;
+    int i=0;
+    for(Chromosome c : population){
+      double probability = probability_sum + (c.fitness / fitness_sum);
+      probability_sum += probability;
+      probabilities[i++] = probability;
+    }
+    Chromosome[] parents = new Chromosome[2];
+    for(int j=0; j<2; ++j){
+      double n = instance.randomGenerator.nextDouble();
+      for(int k=0; k<instance.populationSize; ++k){
+        if(n > probabilities[k]){
+          parents[j] = population[k];
+          break;
+        }
+      }
+    }
+    return parents;
   }
 
 }
