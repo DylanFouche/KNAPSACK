@@ -49,7 +49,7 @@ public class Chromosome implements Comparable<Chromosome>
     boolean[] gene = new boolean[instance.knapsack.items.size()];
     for (int i=0; i<gene.length; ++i)
     {
-      gene[i] = instance.randomGenerator.nextBoolean();
+      gene[i] = instance.randomGenerator.nextBoolean(0.1);//probability to ensure some initial solutions meet weight constraint
     }
     return gene;
   }

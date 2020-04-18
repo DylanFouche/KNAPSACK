@@ -4,6 +4,8 @@
   FCHDYL001
 */
 
+import java.text.DecimalFormat;
+
 public abstract class Solver
 {
   public Instance instance;
@@ -15,6 +17,7 @@ public abstract class Solver
   public String timestamp;
   public long runtime;
   public String parameterString;
+  private DecimalFormat df = new DecimalFormat("##.000");
 
   public abstract void solve();
   public abstract void tick();
@@ -38,7 +41,8 @@ public abstract class Solver
     s += "Convergence" + "\t" + "#" + "\t" + "bweight" + "\t" + "bvalue" + "\t" + "squality" + "\n";
     for(int i = 0; i<instance.maxIterations; ++i){
       if(i==0 || (i+1)%2500==0){
-        s += "\t" + "\t" + solutions[i].iteration + "\t" + solutions[i].bweight + "\t" + solutions[i].bvalue + "\t" + solutions[i].squality + "\n";
+        s += "\t" + "\t" + solutions[i].iteration + "\t" + solutions[i].bweight + "\t" +
+          solutions[i].bvalue + "\t" + df.format(solutions[i].squality) + "%" + "\n";
       }
     }
     s += "====================================================================" + "\n";
@@ -53,13 +57,14 @@ public abstract class Solver
     public int bvalue;
     public double squality;
     public String knapsack;
+    private DecimalFormat df = new DecimalFormat("##.000");
 
     public CandidateSolution(Instance instance, int iteration, int bweight, int bvalue, boolean[] knapsack){
       this.instance = instance;
       this.iteration = iteration+1;
       this.bweight = bweight;
       this.bvalue = bvalue;
-      this.squality = (bvalue / instance.knapsack.best_solution) * 100;
+      this.squality = (double)((double)bvalue / (double)instance.knapsack.best_solution) * 100;
       String knapsackString = "[";
       for(int i=0;i<25;++i){
         if(knapsack[i]){
@@ -79,7 +84,7 @@ public abstract class Solver
       s += iteration + "\t";
       s += bweight + "\t";
       s += bvalue + "\t";
-      s += squality + "%" + "\t";
+      s += df.format(squality) + "%" + "\t\t";
       s += knapsack;
       return s;
     }

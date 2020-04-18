@@ -16,6 +16,7 @@ public class GASolver extends Solver
     this.instance = instance;
     this.timer = new Timer();
     this.population = new Population(instance);
+    this.solutions = new CandidateSolution[instance.maxIterations];
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     LocalDateTime now = LocalDateTime.now();
     this.timestamp = dtf.format(now);

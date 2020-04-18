@@ -47,14 +47,14 @@ public class Population
             chromosomeArray[index] = children[1];
           }
         }
-        else if (instance.randomGenerator.nextFloat() <= instance.mutationRatio) {
-          chromosomeArray[index] = population[index].doMutation();
-        }
-        else {
-          chromosomeArray[index] = population[index];
-        }
-        index++;
       }
+      else if (instance.randomGenerator.nextFloat() <= instance.mutationRatio) {
+        chromosomeArray[index] = population[index].doMutation();
+      }
+      else {
+        chromosomeArray[index] = population[index];
+      }
+      index++;
     }
     Arrays.sort(chromosomeArray, Collections.reverseOrder());
     population = chromosomeArray;
@@ -91,21 +91,28 @@ public class Population
     for(Chromosome c : population){
       fitness_sum += c.fitness;
     }
-    double[] probabilities = new double[instance.populationSize];
-    double probability_sum = 0;
-    int i=0;
-    for(Chromosome c : population){
-      double probability = probability_sum + (c.fitness / fitness_sum);
-      probability_sum += probability;
-      probabilities[i++] = probability;
-    }
     Chromosome[] parents = new Chromosome[2];
-    for(int j=0; j<2; ++j){
-      double n = instance.randomGenerator.nextDouble();
-      for(int k=0; k<instance.populationSize; ++k){
-        if(n > probabilities[k]){
-          parents[j] = population[k];
-          break;
+    if(fitness_sum==0){
+      //all genes have zero fitness, choose randomly
+      parents[0]=population[instance.randomGenerator.nextInt(instance.populationSize-1)];
+      parents[1]=population[instance.randomGenerator.nextInt(instance.populationSize-1)];
+    }
+    else{
+      double[] probabilities = new double[instance.populationSize];
+      double probability_sum = 0;
+      int i=0;
+      for(Chromosome c : population){
+        double probability = probability_sum + (c.fitness / fitness_sum);
+        probability_sum += probability;
+        probabilities[i++] = probability;
+      }
+      for(int j=0; j<2; ++j){
+        double n = instance.randomGenerator.nextDouble();
+        for(int k=0; k<instance.populationSize; ++k){
+          if(n > probabilities[k]){
+            parents[j] = population[k];
+            break;
+          }
         }
       }
     }
