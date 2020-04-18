@@ -6,8 +6,9 @@
 
 public class Chromosome implements Comparable<Chromosome>
 {
-  private boolean[] gene;
-  private int fitness;
+  public boolean[] gene;
+  public int weight;
+  public int fitness;
   public Instance instance;
 
   public Chromosome(Instance instance)
@@ -35,6 +36,7 @@ public class Chromosome implements Comparable<Chromosome>
         weightTotal += instance.knapsack.items.get(i).weight;
       }
     }
+    this.weight = weightTotal;
     return weightTotal <= instance.knapsack.capacity ? fitness : 0;
   }
 

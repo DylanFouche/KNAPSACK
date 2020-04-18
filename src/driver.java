@@ -19,7 +19,7 @@ public class driver
         if(instance.algorithm_type.equals("ga"))
         {
           GASolver solver = new GASolver(instance);
-          //TODO implement
+          solver.solve();
         }
         else if (instance.algorithm_type.equals("sa"))
         {

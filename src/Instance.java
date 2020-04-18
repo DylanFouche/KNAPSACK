@@ -15,6 +15,7 @@ public class Instance
   Knapsack knapsack = new Knapsack();
   MersenneTwister randomGenerator = new MersenneTwister(System.currentTimeMillis());
   int maxIterations = 10000;
+  String configuration_name;
   String algorithm_type;
   //genetic algorithm fields
   int populationSize = 2048;
@@ -44,12 +45,14 @@ public class Instance
       while(sc.hasNextLine()){
         json_string += sc.nextLine();
       }
+      sc.close();
     }
     catch(IOException e){
       System.out.println("Configuration file not found!");
       System.exit(0);
     }
     JSONObject json_obj = new JSONObject(json_string);
+    this.configuration_name = json_obj.getString("configuration");
 
     if(this.algorithm_type.equals("ga"))
     {
