@@ -32,7 +32,7 @@ public class GASolver extends Solver
     currentBestSolutionQuality = 0;
     generator.log(header());
     timer.tick();
-    while(iteration < instance.maxIterations && currentBestSolutionQuality < 100){
+    while(iteration < instance.maxIterations){
       tick();
       ++iteration;
     }
