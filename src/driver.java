@@ -76,7 +76,7 @@ public class driver
             if(solver.currentBestSolutionQuality > bestSquality){
               bestSquality = solver.currentBestSolutionQuality;
               bestConfigurationName = instance.configuration_name;
-              bestConfigurationContents = instance.configuration_name;
+              bestConfigurationContents = instance.configuration_string;
             }
           }
           solver = null;
