@@ -36,6 +36,7 @@ public class Knapsack
         knapsackItem item = new knapsackItem(Integer.parseInt(line[1]),Integer.parseInt(line[2]));
         items.add(item);
       }
+      sc.close();
     }
     catch(IOException e){
       System.out.println("Error reading in knapsack contents.");

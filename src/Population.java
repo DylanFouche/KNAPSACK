@@ -76,6 +76,7 @@ public class Population
   }
 
   private Chromosome[] doTS(){
+    //tournament selection algorithm
     int tournament_size = instance.populationSize / 10;
     Chromosome[] competitors = new Chromosome[tournament_size];
     for(int i=0; i<tournament_size; ++i){
@@ -87,6 +88,7 @@ public class Population
   }
 
   private Chromosome[] doRWS(){
+    //roulette wheel selection algorithm
     long fitness_sum = 0;
     for(Chromosome c : population){
       fitness_sum += c.fitness;

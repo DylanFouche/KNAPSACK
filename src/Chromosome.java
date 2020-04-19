@@ -202,7 +202,7 @@ public class Chromosome implements Comparable<Chromosome>
     int[] mutation_indicies = {instance.randomGenerator.nextInt(instance.knapsack.items.size()-1),
       instance.randomGenerator.nextInt(instance.knapsack.items.size()-1)};
     Arrays.sort(mutation_indicies);
-    List<Boolean> sublist = new_gene_list.subList(mutation_indicies[0], mutation_indicies[1]);
+    List<Boolean> sublist = new LinkedList<Boolean>(new_gene_list.subList(mutation_indicies[0], mutation_indicies[1]));
     new_gene_list.subList(mutation_indicies[0], mutation_indicies[1]).clear();
     int insertion_index = instance.randomGenerator.nextInt(new_gene_list.size()-1);
     new_gene_list.addAll(insertion_index, sublist);
