@@ -47,15 +47,15 @@ public class Generator
     s += "Evaluation | " + solver.timestamp + "\n";
     s += "Configuration:" + "\t" + instance.configuration_name + "\n";
     s += "\t" + "\t" + solver.parameterString + "\n";
-    s += "====================================================================" + "\n";
+    s += "======================================================================" + "\n";
     s += "#" + "\t" + "bweight" + "\t" + "bvalue" + "\t" + "squality" + "\t" + "knapsack" + "\n";
-    s += "--------------------------------------------------------------------";
+    s += "----------------------------------------------------------------------";
     log(s);
   }
 
   public void footer(){
     String s = "";
-    s += "--------------------------------------------------------------------" + "\n";
+    s += "----------------------------------------------------------------------" + "\n";
     s += "[Statistics]" + "\n";
     s += "Runtime" + "\t" + solver.runtime + "ms" + "\n\n";
     s += "Convergence" + "\t" + "#" + "\t" + "bweight" + "\t" + "bvalue" + "\t" + "squality" + "\n";
@@ -69,8 +69,10 @@ public class Generator
     s += "Best solution" + "\n";
     s += "weight:" + "\t" + solver.solutions[solver.currentBestSolutionIndex].bweight + "\t";
     s += "value:" + "\t" + solver.solutions[solver.currentBestSolutionIndex].bvalue + "\n";
-    s += solver.solutions[solver.currentBestSolutionIndex].knapsack_string_long + "\n";
-    s += "====================================================================" + "\n";
+    s += (solver.solutions[solver.currentBestSolutionIndex].knapsack_string_long).substring(0,52) + "\n";
+    s += (solver.solutions[solver.currentBestSolutionIndex].knapsack_string_long).substring(52,104) + "\n";
+    s += (solver.solutions[solver.currentBestSolutionIndex].knapsack_string_long).substring(104) + "\n";
+    s += "======================================================================" + "\n";
     log(s);
   }
 }
