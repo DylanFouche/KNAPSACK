@@ -6,7 +6,7 @@
 
 public class PSOSolver extends Solver
 {
-  public GASolver(Instance instance)
+  public PSOSolver(Instance instance)
   {
     //TODO implement
   }

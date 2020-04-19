@@ -16,20 +16,20 @@ public class driver
       {
         System.out.println("Executing configuration " + args[1]);
         instance = new Instance(args[1]);
+        Solver solver = null;
         if(instance.algorithm_type.equals("ga"))
         {
-          GASolver solver = new GASolver(instance);
-          solver.solve();
+          solver = new GASolver(instance);
         }
         else if (instance.algorithm_type.equals("sa"))
         {
-          //TODO implement
+          solver = new SASolver(instance);
         }
         else if(instance.algorithm_type.equals("pso"))
         {
-          //TODO implement
+          solver = new PSOSolver(instance);
         }
-
+        if (solver!=null) solver.solve();
       }
       else if(args[0].equals("-search_best_configuration"))
       {

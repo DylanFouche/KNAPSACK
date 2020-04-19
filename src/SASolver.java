@@ -6,7 +6,7 @@
 
 public class SASolver extends Solver
 {
-  public GASolver(Instance instance)
+  public SASolver(Instance instance)
   {
     //TODO implement
   }
