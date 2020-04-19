@@ -3,20 +3,21 @@
 # FCHDYL001
 
 JCC = javac
+CCFLAGS = -implicit:none -nowarn
 
 SRCDIR = src
 BINDIR = bin
 DOCDIR = doc
-INCLDIR = include
+INCDIR = include
 
 SRC = $(shell find ./$(SRCDIR) -type f)
-JAR = $(shell find ./$(INCLDIR) -type f)
-OBJ = $(SRC:.java=.class)
+JAR = $(shell find ./$(INCDIR) -type f)
+OBJ = $(addprefix $(BINDIR)/,$(notdir $(SRC:.java=.class)))
 
 default : $(OBJ)
 
-%.class: %.java
-		$(JCC) -sourcepath $(SRCDIR) -d $(BINDIR) -cp $(JAR) $*.java
+$(BINDIR)/%.class: $(SRCDIR)/%.java
+		$(JCC) $(CCFLAGS) -sourcepath $(SRCDIR) -d $(BINDIR) -cp $(JAR) "$<"
 
 clean:
 	rm $(BINDIR)/*.class

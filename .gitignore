@@ -7,3 +7,6 @@
 
 # Ignore binaries
 *.class
+
+# Ignore generated data
+data/*.txt
