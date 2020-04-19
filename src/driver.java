@@ -7,6 +7,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 public class driver
 {
@@ -33,6 +34,7 @@ public class driver
       else if(args[0].equals("-search_best_configuration")){
         File f = new File("config/");
         String[] configurations = f.list();
+        Arrays.sort(configurations);
         System.out.println("Searching for best " + args[1] + " configuration");
         double bestSquality = 0;
         String bestConfigurationName = "";
