@@ -44,6 +44,7 @@ public class Generator
 
   public void header(){
     String s = "";
+    s += "----------------------------------------------------------------------" + "\n";
     s += "Evaluation | " + solver.timestamp + "\n";
     s += "Configuration:" + "\t" + instance.configuration_name + "\n";
     s += "\t" + "\t" + solver.parameterString + "\n";
@@ -69,9 +70,9 @@ public class Generator
     s += "Best solution" + "\n";
     s += "weight:" + "\t" + solver.solutions[solver.currentBestSolutionIndex].bweight + "\t";
     s += "value:" + "\t" + solver.solutions[solver.currentBestSolutionIndex].bvalue + "\n";
-    s += (solver.solutions[solver.currentBestSolutionIndex].knapsack_string_long).substring(0,52) + "\n";
-    s += (solver.solutions[solver.currentBestSolutionIndex].knapsack_string_long).substring(52,104) + "\n";
-    s += (solver.solutions[solver.currentBestSolutionIndex].knapsack_string_long).substring(104) + "\n";
+    s += (solver.solutions[solver.currentBestSolutionIndex].knapsack_string_long).substring(0,70) + "\n";
+    s += " " + (solver.solutions[solver.currentBestSolutionIndex].knapsack_string_long).substring(70,139) + "\n";
+    s += " " + (solver.solutions[solver.currentBestSolutionIndex].knapsack_string_long).substring(139) + "\n";
     s += "======================================================================" + "\n";
     log(s);
   }
