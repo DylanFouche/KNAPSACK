@@ -16,6 +16,7 @@ public class Instance
   MersenneTwister randomGenerator = new MersenneTwister(System.currentTimeMillis());
   int maxIterations = 10000;
   String configuration_name;
+  String configuration_string;
   String algorithm_type;
   //genetic algorithm fields
   int populationSize = 2048;
@@ -52,6 +53,7 @@ public class Instance
       System.exit(0);
     }
     JSONObject json_obj = new JSONObject(json_string);
+    this.configuration_string = json_string;
     this.configuration_name = json_obj.getString("configuration");
 
     if(this.algorithm_type.equals("ga"))
