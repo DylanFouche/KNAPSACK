@@ -13,41 +13,15 @@ public abstract class Solver
   public Timer timer;
   public CandidateSolution[] solutions;
   public double currentBestSolutionQuality;
+  public int currentBestSolutionIndex;
   public int iteration = 0;
   public String timestamp;
   public long runtime;
   public String parameterString;
-  private DecimalFormat df = new DecimalFormat("##.000");
+  public DecimalFormat df = new DecimalFormat("###.0000");
 
   public abstract void solve();
   public abstract void tick();
-
-  public String header(){
-    String s = "";
-    s += "Evaluation | " + timestamp + "\n";
-    s += "Configuration:" + "\t" + instance.configuration_name + "\n";
-    s += "\t" + "\t" + parameterString + "\n";
-    s += "====================================================================" + "\n";
-    s += "#" + "\t" + "bweight" + "\t" + "bvalue" + "\t" + "squality" + "\t" + "knapsack" + "\n";
-    s += "--------------------------------------------------------------------" + "\n";
-    return s;
-  }
-
-  public String footer(){
-    String s = "";
-    s += "--------------------------------------------------------------------" + "\n";
-    s += "[Statistics]" + "\n";
-    s += "Runtime" + "\t" + runtime + "ms" + "\n";
-    s += "Convergence" + "\t" + "#" + "\t" + "bweight" + "\t" + "bvalue" + "\t" + "squality" + "\n";
-    for(int i = 0; i<instance.maxIterations; ++i){
-      if(i==0 || (i+1)%2500==0){
-        s += "\t" + "\t" + solutions[i].iteration + "\t" + solutions[i].bweight + "\t" +
-          solutions[i].bvalue + "\t" + df.format(solutions[i].squality) + "%" + "\n";
-      }
-    }
-    s += "====================================================================" + "\n";
-    return s;
-  }
 
   public class CandidateSolution
   {
@@ -56,8 +30,9 @@ public abstract class Solver
     public int bweight;
     public int bvalue;
     public double squality;
-    public String knapsack;
-    private DecimalFormat df = new DecimalFormat("##.000");
+    public String knapsack_string_short;
+    public String knapsack_string_long;
+    private DecimalFormat df = new DecimalFormat("##.0000");
 
     public CandidateSolution(Instance instance, int iteration, int bweight, int bvalue, boolean[] knapsack){
       this.instance = instance;
@@ -65,17 +40,26 @@ public abstract class Solver
       this.bweight = bweight;
       this.bvalue = bvalue;
       this.squality = (double)((double)bvalue / (double)instance.knapsack.best_solution) * 100;
-      String knapsackString = "[";
-      for(int i=0;i<25;++i){
+      this.knapsack_string_long = "[";
+      this.knapsack_string_short = "[";
+      for(int i=0;i<instance.knapsack.items.size();++i){
+        if(i<25){
+          if(knapsack[i]){
+            this.knapsack_string_short += "1";
+          }
+          else{
+            this.knapsack_string_short += "0";
+          }
+        }
         if(knapsack[i]){
-          knapsackString += "1";
+          this.knapsack_string_long += "1";
         }
         else{
-          knapsackString += "0";
+          this.knapsack_string_long += "0";
         }
       }
-      knapsackString += "...]";
-      this.knapsack = knapsackString;
+      this.knapsack_string_short += "...]";
+      this.knapsack_string_long += "]";
     }
 
     @Override
@@ -84,8 +68,8 @@ public abstract class Solver
       s += iteration + "\t";
       s += bweight + "\t";
       s += bvalue + "\t";
-      s += df.format(squality) + "%" + "\t\t";
-      s += knapsack;
+      s += df.format(squality) + "%" + "\t";
+      s += knapsack_string_short;
       return s;
     }
   }

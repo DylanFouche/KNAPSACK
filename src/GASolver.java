@@ -20,7 +20,7 @@ public class GASolver extends Solver
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     LocalDateTime now = LocalDateTime.now();
     this.timestamp = dtf.format(now);
-    this.generator = new Generator(instance);
+    this.generator = new Generator(instance, this);
     String parameterString = "";
     parameterString += instance.algorithm_type + " | #" + instance.maxIterations + " | " + instance.selectionMethod + " | ";
     parameterString += instance.crossoverMethod + "(" + instance.crossoverRatio + ") | ";
@@ -30,14 +30,14 @@ public class GASolver extends Solver
 
   public void solve(){
     currentBestSolutionQuality = 0;
-    generator.log(header());
+    generator.header();
     timer.tick();
     while(iteration < instance.maxIterations){
       tick();
       ++iteration;
     }
     this.runtime = timer.tock();
-    generator.log(footer());
+    generator.footer();
     generator.writeLog();
   }
 
@@ -46,11 +46,12 @@ public class GASolver extends Solver
     CandidateSolution candidateSolution = new CandidateSolution(instance, iteration,
       population.population[0].weight, population.population[0].fitness, population.population[0].gene);
     solutions[iteration] = candidateSolution;
-    if(iteration > 0 && solutions[iteration].squality > solutions[iteration-1].squality){
+    if(iteration == 0  || solutions[iteration].squality > solutions[iteration-1].squality){
       generator.log(solutions[iteration].toString());
     }
     if(solutions[iteration].squality > currentBestSolutionQuality){
       currentBestSolutionQuality = solutions[iteration].squality;
+      currentBestSolutionIndex = iteration;
     }
   }
 }
