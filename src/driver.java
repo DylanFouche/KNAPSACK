@@ -41,45 +41,47 @@ public class driver
         String bestConfigurationContents = "";
         for(String configuration : configurations)
         {
-          instance = new Instance(configuration);
-          if(args[1].equals("ga")){
-            if (instance.algorithm_type.equals("ga")){
-              solver = new GASolver(instance);
+          if(configuration.charAt(0)!='.'){
+            instance = new Instance(configuration);
+            if(args[1].equals("ga")){
+              if (instance.algorithm_type.equals("ga")){
+                solver = new GASolver(instance);
+              }
             }
+            else if (args[1].equals("sa")){
+              if (instance.algorithm_type.equals("sa")){
+                solver = new SASolver(instance);
+              }
+            }
+            else if(args[1].equals("pso")){
+              if (instance.algorithm_type.equals("pso")){
+                solver = new PSOSolver(instance);
+              }
+            }
+            else if(args[1].equals("overall")){
+              if(instance.algorithm_type.equals("ga")){
+                solver = new GASolver(instance);
+              }
+              else if (instance.algorithm_type.equals("sa")){
+                solver = new SASolver(instance);
+              }
+              else if(instance.algorithm_type.equals("pso")){
+                solver = new PSOSolver(instance);
+              }
+            }
+            else{
+              showUsage();
+            }
+            if(solver != null){
+              solver.solve();
+              if(solver.currentBestSolutionQuality > bestSquality){
+                bestSquality = solver.currentBestSolutionQuality;
+                bestConfigurationName = instance.configuration_name;
+                bestConfigurationContents = instance.configuration_string;
+              }
+            }
+            solver = null;
           }
-          else if (args[1].equals("sa")){
-            if (instance.algorithm_type.equals("sa")){
-              solver = new SASolver(instance);
-            }
-          }
-          else if(args[1].equals("pso")){
-            if (instance.algorithm_type.equals("pso")){
-              solver = new PSOSolver(instance);
-            }
-          }
-          else if(args[1].equals("overall")){
-            if(instance.algorithm_type.equals("ga")){
-              solver = new GASolver(instance);
-            }
-            else if (instance.algorithm_type.equals("sa")){
-              solver = new SASolver(instance);
-            }
-            else if(instance.algorithm_type.equals("pso")){
-              solver = new PSOSolver(instance);
-            }
-          }
-          else{
-            showUsage();
-          }
-          if(solver != null){
-            solver.solve();
-            if(solver.currentBestSolutionQuality > bestSquality){
-              bestSquality = solver.currentBestSolutionQuality;
-              bestConfigurationName = instance.configuration_name;
-              bestConfigurationContents = instance.configuration_string;
-            }
-          }
-          solver = null;
         }
         System.out.println("The best " + args[1] + " configuration is " + bestConfigurationName);
         String outputFileName = "config/" + args[1] + "_best.json";
