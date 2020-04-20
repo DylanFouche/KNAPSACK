@@ -46,10 +46,8 @@ public class GASolver extends Solver
     CandidateSolution candidateSolution = new CandidateSolution(instance, iteration,
       population.population[0].weight, population.population[0].fitness, population.population[0].gene);
     solutions[iteration] = candidateSolution;
-    if(iteration == 0  || solutions[iteration].squality > solutions[iteration-1].squality){
+    if(iteration == 0  || solutions[iteration].squality > currentBestSolutionQuality){
       generator.log(solutions[iteration].toString());
-    }
-    if(solutions[iteration].squality > currentBestSolutionQuality){
       currentBestSolutionQuality = solutions[iteration].squality;
       currentBestSolutionIndex = iteration;
     }

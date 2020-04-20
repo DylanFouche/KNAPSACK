@@ -35,8 +35,7 @@ public class Chromosome implements Comparable<Chromosome>
     int weightTotal = 0;
     for (int i=0; i<instance.knapsack.items.size(); ++i)
     {
-      if(gene[i])
-      {
+      if(gene[i]){
         fitness += instance.knapsack.items.get(i).value;
         weightTotal += instance.knapsack.items.get(i).weight;
       }
