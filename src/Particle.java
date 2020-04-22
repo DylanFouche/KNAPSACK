@@ -29,13 +29,18 @@ public class Particle implements Comparable<Particle>
   public void updatePosition(boolean[] gbest){
     for(int i=0; i<x.length; ++i)
     {
-      double r1 = instance.randomGenerator.nextDouble();
-      double r2 = instance.randomGenerator.nextDouble();
-      double momentum = instance.inertia * v[i];
-      double cognitive_component = r1 * instance.c1 * boolDiff(pbest[i], x[i]);
-      double social_component = r2 * instance.c2 * boolDiff(gbest[i], x[i]);
-      v[i] = clamp(momentum + cognitive_component + social_component);
-      x[i] = (instance.randomGenerator.nextDouble() < sigmoid(v[i])) ? true : false;
+      if(x!=gbest){
+        //ACKNOWLEDGEMENT
+        //Using the Modified Binary Particle Swarm Optimization Algorithm
+        //Authors: J Bansal, K Deep (2012)
+        double momentum = instance.inertia * v[i];
+        double cognitive = instance.randomGenerator.nextDouble() * instance.c1 * boolDiff(pbest[i], x[i]);
+        double social = instance.randomGenerator.nextDouble() * instance.c2 * boolDiff(gbest[i], x[i]);
+        v[i] = clamp(momentum + cognitive + social);
+        //x[i] = (instance.randomGenerator.nextDouble() < sigmoid(v[i])) ? true : false;
+        double p =(boolToInt(x[i]) + v[i] + instance.maxVelocity)/(1 + (2 * instance.maxVelocity));
+        x[i] = (instance.randomGenerator.nextDouble() < p) ? true : false;
+      }
     }
     calculateFitness();
     if(fitness > pbest_fitness){
@@ -67,6 +72,10 @@ public class Particle implements Comparable<Particle>
       return -1;
     }
     return 0;
+  }
+
+  public int boolToInt(boolean b){
+    return b ? 1 : 0;
   }
 
   public void calculateFitness() {

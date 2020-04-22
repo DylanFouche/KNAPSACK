@@ -22,9 +22,9 @@ public class PSOSolver extends Solver
     this.timestamp = dtf.format(now);
     this.generator = new Generator(instance, this);
     String parameterString = "";
-    parameterString += instance.algorithm_type + " | #" + instance.particles + " | " + "w=" + instance.inertia + " | ";
-    parameterString += "c1=" + instance.c1 + " | " + "c2=" + instance.c2 + " | ";
-    parameterString += "Vmax=" + instance.maxVelocity + " | " + "Vmin=" + instance.minVelocity + " | ";
+    parameterString += instance.algorithm_type + " | #" + instance.particles + " |" + "w=" + instance.inertia + "|";
+    parameterString += "c1=" + instance.c1 + "|" + "c2=" + instance.c2 + "|";
+    parameterString += "Vmax=" + instance.maxVelocity + "|" + "Vmin=" + instance.minVelocity + "|";
     this.parameterString = parameterString;
   }
 

@@ -68,7 +68,7 @@ public class Instance
     {
       this.particles = json_obj.getInt("number_particles");
       this.maxVelocity = json_obj.getInt("maximum_velocity");
-      this.minVelocity = json_obj.getInt("minimum_velocity");
+      this.minVelocity = json_obj.getInt("minimum_velocity") * -1;
       this.inertia = json_obj.getDouble("inertia");
       this.c1 = json_obj.getDouble("c1");
       this.c2 = json_obj.getDouble("c2");
