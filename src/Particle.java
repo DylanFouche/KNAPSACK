@@ -31,13 +31,12 @@ public class Particle implements Comparable<Particle>
     {
       if(x!=gbest){
         //ACKNOWLEDGEMENT
-        //Using the Modified Binary Particle Swarm Optimization Algorithm
-        //Authors: J Bansal, K Deep (2012)
+        //Using the Modified Binary Particle Swarm Optimization Algorithm (MBPSO)
+        //Authors: J.C. Bansal, K. Deep (2012)
         double momentum = instance.inertia * v[i];
-        double cognitive = instance.randomGenerator.nextDouble() * instance.c1 * boolDiff(pbest[i], x[i]);
-        double social = instance.randomGenerator.nextDouble() * instance.c2 * boolDiff(gbest[i], x[i]);
+        double cognitive = instance.randomGenerator.nextDouble() * instance.c1 * (boolToInt(pbest[i]) - boolToInt(x[i]));
+        double social = instance.randomGenerator.nextDouble() * instance.c2 * (boolToInt(gbest[i]) - boolToInt(x[i]));
         v[i] = clamp(momentum + cognitive + social);
-        //x[i] = (instance.randomGenerator.nextDouble() < sigmoid(v[i])) ? true : false;
         double p =(boolToInt(x[i]) + v[i] + instance.maxVelocity)/(1 + (2 * instance.maxVelocity));
         x[i] = (instance.randomGenerator.nextDouble() < p) ? true : false;
       }
@@ -47,10 +46,6 @@ public class Particle implements Comparable<Particle>
       pbest = x;
       pbest_fitness = fitness;
     }
-  }
-
-  public double sigmoid(double x){
-    return 1 / (1 + Math.exp(x));
   }
 
   public double clamp(double v){
@@ -64,18 +59,12 @@ public class Particle implements Comparable<Particle>
     return velocity;
   }
 
-  public int boolDiff(boolean a, boolean b){
-    if(a && !b){
-      return 1;
-    }
-    else if(!a && b){
-      return -1;
-    }
-    return 0;
-  }
-
   public int boolToInt(boolean b){
     return b ? 1 : 0;
+  }
+
+  public double sigmoid(double x){
+    return 1 / (1 + Math.exp(x));
   }
 
   public void calculateFitness() {
