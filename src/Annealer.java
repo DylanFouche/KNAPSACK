@@ -21,22 +21,22 @@ public class Annealer
   }
 
   public void cool(){
-    boolean[] new_solution = generateRandomSolution();
+    boolean[] new_solution = generateNewSolution(current_solution);
     double current_energy = calculateFitness(current_solution);
     double new_energy = calculateFitness(new_solution);
-    if(new_energy > current_energy){
+    if(acceptanceProbability(current_energy, new_energy) > instance.randomGenerator.nextDouble()){
       current_solution = new_solution;
+      if(new_energy > calculateFitness(best_solution)){
+        best_solution = new_solution;
+      }
     }
-    else if(acceptanceProbability(current_energy, new_energy) > instance.randomGenerator.nextDouble()){
-      current_solution = new_solution;
-    }
-    if(calculateFitness(current_solution) > calculateFitness(best_solution)){
-      best_solution = new_solution;
-    }
-    temperature *= 1 - instance.coolingRate;
+    temperature *= (1 - instance.coolingRate);
   }
 
   public double acceptanceProbability(double currentEnergy, double newEnergy){
+    if(newEnergy > currentEnergy){
+      return 1;
+    }
     return Math.exp((currentEnergy-newEnergy)/temperature);
   }
 
@@ -62,13 +62,26 @@ public class Annealer
     return weightTotal;
   }
 
-  public boolean[] generateRandomSolution() {
+  private boolean[] generateNewSolution(boolean[] solution){
+    boolean[] soln1 = generateRandomSolution();
+    boolean[] soln2 = bitFlip(solution);
+    return (calculateFitness(soln1) > calculateFitness(soln2)) ? soln1 : soln2;
+  }
+
+  private boolean[] generateRandomSolution() {
     boolean[] position = new boolean[instance.knapsack.items.size()];
     for (int i=0; i<position.length; ++i)
     {
       position[i] = instance.randomGenerator.nextBoolean(0.1);
     }
     return position;
+  }
+
+  private boolean[] bitFlip(boolean[] solution){
+    boolean[] new_solution = solution;
+    int index = instance.randomGenerator.nextInt(instance.knapsack.items.size()-1);
+    new_solution[index] = !new_solution[index];
+    return new_solution;
   }
 
 }

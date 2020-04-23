@@ -11,8 +11,7 @@ public class SASolver extends Solver
 {
   public Annealer annealer;
 
-  public SASolver(Instance instance)
-  {
+  public SASolver(Instance instance){
     this.instance = instance;
     this.timer = new Timer();
     this.annealer = new Annealer(instance);
@@ -21,8 +20,8 @@ public class SASolver extends Solver
     LocalDateTime now = LocalDateTime.now();
     this.timestamp = dtf.format(now);
     this.generator = new Generator(instance, this);
-    String parameterString = "";
-    parameterString += instance.algorithm_type + " | Initial temperature = " + instance.initialTemp + " | " + "Cooling rate = " + instance.coolingRate + " |";
+    String parameterString = instance.algorithm_type + " | Initial temperature = " + instance.initialTemp + " | ";
+    parameterString += "Cooling rate = " + instance.coolingRate + " |";
     this.parameterString = parameterString;
   }
 
