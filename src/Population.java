@@ -81,7 +81,7 @@ public class Population
 
   private Chromosome[] doTS(){
     //tournament selection algorithm
-    int tournament_size = instance.populationSize / 10;
+    int tournament_size = instance.populationSize / 100;
     Chromosome[] competitors = new Chromosome[tournament_size];
     for(int i=0; i<tournament_size; ++i){
       competitors[i] = population[instance.randomGenerator.nextInt(instance.populationSize-1)];
