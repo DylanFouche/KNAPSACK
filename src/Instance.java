@@ -39,7 +39,6 @@ public class Instance
 
   public Instance(String config_filename)
   {
-    this.algorithm_type = config_filename.substring(0,config_filename.indexOf("_"));
     String json_string = "";
     try{
       Scanner sc = new Scanner(new File("config/"+config_filename));
@@ -55,6 +54,7 @@ public class Instance
     JSONObject json_obj = new JSONObject(json_string);
     this.configuration_string = json_string;
     this.configuration_name = json_obj.getString("configuration");
+    this.algorithm_type = this.configuration_name.substring(0,configuration_name.indexOf("_"));
 
     if(this.algorithm_type.equals("ga"))
     {

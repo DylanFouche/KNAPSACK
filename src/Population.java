@@ -10,6 +10,7 @@ import java.util.Collections;
 public class Population
 {
   public Chromosome[] population;
+  public double[] rouletteWheel = null;
   public Instance instance;
 
   public Population(Instance instance)
@@ -26,7 +27,9 @@ public class Population
     Chromosome[] chromosomeArray = new Chromosome[population.length];
     int index = (int) Math.round(population.length * instance.elitismRatio);
     System.arraycopy(population, 0, chromosomeArray, 0, index);
-
+    if(instance.selectionMethod.equals("RWS")){
+      rouletteWheel = setupRouletteWheel();
+    }
     while (index < chromosomeArray.length) {
       if (instance.randomGenerator.nextFloat() <= instance.crossoverRatio) {
         Chromosome[] parents = selectParents();
@@ -58,6 +61,7 @@ public class Population
     }
     Arrays.sort(chromosomeArray, Collections.reverseOrder());
     population = chromosomeArray;
+    rouletteWheel = null;
   }
 
   private Chromosome[] selectParents(){
@@ -89,36 +93,33 @@ public class Population
 
   private Chromosome[] doRWS(){
     //roulette wheel selection algorithm
-    long fitness_sum = 0;
-    for(Chromosome c : population){
-      fitness_sum += c.fitness;
-    }
     Chromosome[] parents = new Chromosome[2];
-    if(fitness_sum==0){
-      //all genes have zero fitness, choose randomly
-      parents[0]=population[instance.randomGenerator.nextInt(instance.populationSize-1)];
-      parents[1]=population[instance.randomGenerator.nextInt(instance.populationSize-1)];
-    }
-    else{
-      double[] probabilities = new double[instance.populationSize];
-      double probability_sum = 0;
-      int i=0;
-      for(Chromosome c : population){
-        double probability = probability_sum + (c.fitness / fitness_sum);
-        probability_sum += probability;
-        probabilities[i++] = probability;
-      }
-      for(int j=0; j<2; ++j){
-        double n = instance.randomGenerator.nextDouble();
-        for(int k=0; k<instance.populationSize; ++k){
-          if(n > probabilities[k]){
-            parents[j] = population[k];
-            break;
-          }
+    for(int j=0; j<2; ++j){
+      double n = instance.randomGenerator.nextDouble();
+      for(int k=0; k<instance.populationSize; ++k){
+        if(n > rouletteWheel[k]){
+          parents[j] = population[k];
+          break;
         }
       }
     }
     return parents;
+  }
+
+  private double[] setupRouletteWheel(){
+    long fitness_sum = 0;
+    for(Chromosome c : population){
+      fitness_sum += c.fitness;
+    }
+    double[] probabilities = new double[instance.populationSize];
+    double probability_sum = 0;
+    int i=0;
+    for(Chromosome c : population){
+      double probability = probability_sum + (c.fitness / fitness_sum);
+      probability_sum += probability;
+      probabilities[i++] = probability;
+    }
+    return probabilities;
   }
 
 }

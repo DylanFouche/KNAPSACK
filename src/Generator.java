@@ -67,9 +67,10 @@ public class Generator
       }
     }
     s += "\n";
-    s += "Best solution" + "\n";
+    s += "Best solution" + "\n\n";
     s += "weight:" + "\t" + solver.solutions[solver.currentBestSolutionIndex].bweight + "\t";
-    s += "value:" + "\t" + solver.solutions[solver.currentBestSolutionIndex].bvalue + "\n";
+    s += "value:" + "\t" + solver.solutions[solver.currentBestSolutionIndex].bvalue + "\t";
+    s += "solution quality:" + "\t" + solver.df.format(solver.solutions[solver.currentBestSolutionIndex].squality) + "%" + "\n";
     s += (solver.solutions[solver.currentBestSolutionIndex].knapsack_string_long).substring(0,70) + "\n";
     s += " " + (solver.solutions[solver.currentBestSolutionIndex].knapsack_string_long).substring(70,139) + "\n";
     s += " " + (solver.solutions[solver.currentBestSolutionIndex].knapsack_string_long).substring(139) + "\n";
