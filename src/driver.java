@@ -108,7 +108,7 @@ public class driver
   public static void showUsage()
   {
     String useCase1 = "./run.sh -configuration [name].json";
-    String useCase2 = "/run.sh -search_best_configuration [ ga | sa | pso | overall ]";
+    String useCase2 = "./run.sh -search_best_configuration [ ga | sa | pso | overall ]";
     System.out.println("Error in input parameters. Correct usage:");
     System.out.println(useCase1);
     System.out.println("OR");
