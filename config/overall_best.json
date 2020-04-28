@@ -1,1 +1,1 @@
-{"minimum_velocity":"2","maximum_velocity":"2","inertia":"1.00","configuration":"pso_default_05","number_particles":"100","c1":"0.5","c2":"0.5"}
+{"selection_method":"TS","configuration":"ga_default_25","mutation_ratio":"0.003","crossover_ratio":"0.7","crossover_method":"2PX","mutation_method":"EXM"}

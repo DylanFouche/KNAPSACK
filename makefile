@@ -23,7 +23,7 @@ clean:
 	rm $(BINDIR)/*.class
 
 docs:
-	javadoc -d $(DOCDIR) $(SRC)
+	javadoc -d $(DOCDIR) -cp $(JAR) $(SRC)
 
 cleandocs:
 	rm -rf $(DOCDIR)/*
